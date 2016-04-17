@@ -1,17 +1,16 @@
-if [ ! -e boot.img ]
-then
- echo exit!
- exit
-fi
-#cd ..
-#mkdir -p out/target/product/sprout4/conv
-#chmod a+x out/target/product/sprout4/conv
+#cd ../../..
+#mkdir -p out/target/product/sprout4/conv/
+#chmod a+x out/target/product/sprout4/conv/
 #cp out/target/product/sprout4/boot.img out/target/product/sprout4/conv/
-#cp -R external/48c/mkboot/ out/target/product/sprout4/conv/
-#cp external/48c/extract-kernel.pl out/target/product/sprout4/conv
-#cp external/48c/extract-ramdisk.pl out/target/product/sprout4/conv
-#cp -R external/48c/prop out/target/product/sprout4/conv
-#cd out/target/product/sprout4/conv
+#cp -R external/Sprout/48c/mkboot/ out/target/product/sprout4/conv/
+#cp external/Sprout/48c/extract-kernel.pl out/target/product/sprout4/conv
+#cp external/Sprout/48c/extract-ramdisk.pl out/target/product/sprout4/conv
+#cp -R external/Sprout/48c/prop out/target/product/sprout4/conv
+#cd out/target/product/sprout4
+#cp boot.img conv/boot.img
+#cd conv
+#chmod a+x extract-kernel.pl
+#chmod a+x extract-ramdisk.pl
 ./extract-kernel.pl boot.img 2>/dev/null
 ./extract-ramdisk.pl boot.img 2>/dev/null
 cd boot.img-ramdisk
@@ -53,3 +52,8 @@ if [ -e boot.img ]
 then
 echo "Success!"
 fi
+cd ..
+rm *.zip
+rm boot.img
+cp conv/boot.img boot.img
+brunch sprout4
