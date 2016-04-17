@@ -1,16 +1,13 @@
-#cd ../../..
-#mkdir -p out/target/product/sprout4/conv/
-#chmod a+x out/target/product/sprout4/conv/
-#cp out/target/product/sprout4/boot.img out/target/product/sprout4/conv/
-#cp -R external/Sprout/48c/mkboot/ out/target/product/sprout4/conv/
-#cp external/Sprout/48c/extract-kernel.pl out/target/product/sprout4/conv
-#cp external/Sprout/48c/extract-ramdisk.pl out/target/product/sprout4/conv
-#cp -R external/Sprout/48c/prop out/target/product/sprout4/conv
-#cd out/target/product/sprout4
-#cp boot.img conv/boot.img
-#cd conv
-#chmod a+x extract-kernel.pl
-#chmod a+x extract-ramdisk.pl
+cd out/target/product/sprout4/
+cp boot.img ../../../../build/48c/
+cd ../../../../build/48c/
+if [ ! -e boot.img ]
+then
+ echo Error! Stop.
+ exit
+fi
+chmod a+x extract-kernel.pl
+chmod a+x extract-ramdisk.pl
 ./extract-kernel.pl boot.img 2>/dev/null
 ./extract-ramdisk.pl boot.img 2>/dev/null
 cd boot.img-ramdisk
