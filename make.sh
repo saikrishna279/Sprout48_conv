@@ -1,3 +1,7 @@
+if [ ! -e boot.img ]
+then
+ exit
+else
 #cd ..
 #mkdir -p out/target/product/sprout4/conv
 #chmod a+x out/target/product/sprout4/conv
