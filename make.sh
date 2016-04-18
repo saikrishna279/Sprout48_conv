@@ -1,3 +1,8 @@
+blue='\033[0;34m'
+cyan='\033[0;36m'
+yellow='\033[0;33m'
+red='\033[0;31m'
+nocol='\033[0m'
 cd out/target/product/sprout4/
 cp boot.img ../../../../build/48c/
 cd ../../../../build/48c/
@@ -47,10 +52,28 @@ ramdisk_params=""
 ./mkbootimg --kernel zImage --ramdisk ramdisk.gz -o boot.img --base $base $ramdisk_params
 if [ -e boot.img ]
 then
-echo "Success!"
+echo "------------------------------------------------------------------------"
 fi
-cd ..
+cd ../../out/target/product/sprout4/
+KEYWORD_PATTERN='ota'
+KEYWORD_PATTERN=ota
+mkdir $KEYWORD_PATTERN
+cp *.zip $KEYWORD_PATTERN/
+cd $KEYWORD_PATTERN
+grep -Ew -q "KEYWORD_PATTERN" *.zip
+KEYWORD=$(grep -Ew -o "$KEYWORD_PATTERN" *.zip | head -1)
+rm -rf $KEYWORD
+clear
+unzip *.zip
 rm *.zip
 rm boot.img
-cp conv/boot.img boot.img
-brunch sprout4
+cd ../../../../../build/48c
+cp boot.img ../../out/target/product/sprout4/$KEYWORD_PATTERN/
+cd ../../out/target/product/sprout4/$KEYWORD_PATTERN
+zip -r sprout8_ROM.zip * 
+cd ..
+mkdir -p Sprout8
+echo -e "$blue Installing zip file!"
+mv ota/sprout8_ROM.zip Sprout8/
+rm -rf ota/
+echo "Success! ROM file at out/target/product/sprout4/Sprout8/sprout8_zip"
